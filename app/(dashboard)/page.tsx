@@ -1,7 +1,16 @@
+"use client";
+
+import { useGetAccounts } from "@/features/accounts/api/use-get-query";
+
 export default function Home() {
+  const { data: accounts, isLoading } = useGetAccounts();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="">
-      <h1>This is an authenticate route</h1>
+      home page
     </div>
   );
 }
