@@ -21,11 +21,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+
 import React from "react"
-import { Input } from "./ui/input"
 import { TrashIcon } from "lucide-react"
+import { useConfirm } from "@/hooks/use-confirm"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -42,6 +43,12 @@ export function DataTable<TData, TValue>({
   onDelete,
   disable,
 }: DataTableProps<TData, TValue>) {
+
+  const [ConfirmationDiolog, confirm] = useConfirm(
+    "Delete Confirmation",
+    "Are you sure you want to delete the selected row(s)?"
+  )
+
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [rowSelection, setRowSelection] = React.useState({})
@@ -64,7 +71,8 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="">
+    <div className="teste">
+      <ConfirmationDiolog />
       <div className="flex items-center py-4">
         <Input
           placeholder={`Filter by ${filterKey}`}
@@ -76,7 +84,20 @@ export function DataTable<TData, TValue>({
         />
         {
           table.getFilteredSelectedRowModel().rows.length > 0 && (
-            <Button className="ml-auto font-normal text-xs" variant="danger" size="sm">
+            <Button 
+              className="ml-auto font-normal text-xs" 
+              disabled={disable} 
+              variant="danger" 
+              size="sm"
+              onClick={async () => {
+                const ok = await confirm();
+                
+                if (ok) {
+                  onDelete(table.getFilteredSelectedRowModel().rows);
+                  table.resetRowSelection();
+                }
+              }}
+            >
               <TrashIcon className="mr-2 h-4 w-4" />
               Delete ({table.getFilteredSelectedRowModel().rows.length})
             </Button>
