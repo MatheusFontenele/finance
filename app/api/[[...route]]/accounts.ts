@@ -29,6 +29,41 @@ const app = new Hono()
       return context.json({ data });
     }
   )
+  .get(
+    "/:id",
+    clerkMiddleware(),
+    zValidator("param", z.object({ id: z.string().optional() })),
+    async (context) => {
+      const auth = getAuth(context);
+      const { id } = context.req.valid("param");
+
+      if (!auth?.userId) {
+        return context.json({ error: "Unauthorized" }, 401);
+      }
+      if (!id) {
+        return context.json({ error: "Id is required" }, 400);
+      }
+
+      const [data] = await db
+        .select({
+          id: accounts.id,
+          name: accounts.name,
+        })
+        .from(accounts)
+        .where(
+          and(
+            eq(accounts.userId, auth.userId),
+            eq(accounts.id, id)
+          )
+        )
+
+        if (!data) {
+          return context.json({ error: "Account not found" }, 404);
+        }
+
+      return context.json({ data });
+    }
+  )
   .post(
     "/",
     clerkMiddleware(),
