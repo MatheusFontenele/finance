@@ -6,7 +6,7 @@ import { Loader2, Plus } from 'lucide-react';
 import * as React from 'react';
 import { DataTable } from '@/components/data-table';
 import { columns } from './columns';
-import { useGetAccounts } from '@/features/accounts/api/use-get-query';
+import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useBulkDelete } from '@/features/accounts/api/use-bulk-delete';
 
