@@ -17,7 +17,7 @@ type props = {
   id?: string;
   defaultValues?: FromValues;
   onSubmit: (values: FromValues) => void;
-  onDeleted?: () => void;
+  onDelete?: () => void;
   disabled?: boolean;
 }
 
@@ -25,7 +25,7 @@ export const AccountForm = ({
   id,
   defaultValues,
   onSubmit,
-  onDeleted,
+  onDelete,
   disabled,
 }: props) => {
   const form = useForm({
@@ -37,7 +37,7 @@ export const AccountForm = ({
     onSubmit(values);
   }
   const handleDelete = () => {
-    onDeleted?.();
+    onDelete?.();
   }
 
   return (
@@ -45,7 +45,7 @@ export const AccountForm = ({
       <form 
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
-      >
+      > 
         <FormField 
           name="name"
           control={form.control}
@@ -71,17 +71,17 @@ export const AccountForm = ({
           {id ? "Save changes" : "Create account"}
         </Button>
 
-        {!!id && <Button 
+        {!!id && (<Button 
           type="button"
           disabled={disabled}
           onClick={handleDelete}
           className="w-full"
           size="icon"
-          variant="outline"
+          variant="danger"
         >
           <Trash className="size-4 mr-2" />
           Delete account
-        </Button>}
+        </Button>)}
       </form>
     </Form>
   );

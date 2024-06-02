@@ -112,5 +112,74 @@ const app = new Hono()
       return context.json({ data });
     }
   )
+  .patch(
+    "/:id",
+    clerkMiddleware(),
+    zValidator("param", z.object({ id: z.string().optional() })),
+    zValidator("json", insertAccountSchema.pick({ name: true })),
+    async (context) => {
+      const auth = getAuth(context);
+      const { id } = context.req.valid("param");
+      const values = context.req.valid("json");
+
+      if (!auth?.userId) {
+        return context.json({ error: "Unauthorized" }, 401);
+      }
+      if (!id) {
+        return context.json({ error: "Id is required" }, 400);
+      }
+
+      const [ data ] = await db
+        .update(accounts)
+        .set(values)
+        .where(
+          and(
+            eq(accounts.userId, auth.userId),
+            eq(accounts.id, id)
+          )
+        )
+        .returning();
+
+      if (!data) {
+        return context.json({ error: "Account not found" }, 404);
+      }
+
+      return context.json({ data });
+    }
+  )
+  .delete(
+    "/:id",
+    clerkMiddleware(),
+    zValidator("param", z.object({ id: z.string().optional() })),
+    async (context) => {
+      const auth = getAuth(context);
+      const { id } = context.req.valid("param");
+
+      if (!auth?.userId) {
+        return context.json({ error: "Unauthorized" }, 401);
+      }
+      if (!id) {
+        return context.json({ error: "Id is required" }, 400);
+      }
+
+      const [ data ] = await db
+        .delete(accounts)
+        .where(
+          and(
+            eq(accounts.userId, auth.userId),
+            eq(accounts.id, id)
+          )
+        )
+        .returning({
+          id: accounts.id,
+        });
+
+      if (!data) {
+        return context.json({ error: "Account not found" }, 404);
+      }
+
+      return context.json({ data });
+    }
+  )
 
 export default app;

@@ -4,15 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetAccount = (id?: string) => {
   const query = useQuery({
     enabled: !!id,
-    queryKey: ["accounts"],
+    queryKey: ["accounts", { id }],
     queryFn: async () => {
-      const response = await client.api.accounts[":id"].$get({ param: { id } });
-    
+      const response = await client.api.accounts[":id"].$get({ param: { id } });      
+      
       if(!response.ok) throw new Error("Failed to fetch accounts")
 
       const  { data } = await response.json();
+
       return data;
     }
   })
+  
   return query;
 }
