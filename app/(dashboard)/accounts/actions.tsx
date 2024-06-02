@@ -1,30 +1,49 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
 import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
-import { EditIcon, MoreHorizontalIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useConfirm } from "@/hooks/use-confirm";
+import { EditIcon, MoreHorizontalIcon, Trash } from "lucide-react";
 
 interface IActionsProps {
   id: string;
-  s
 }
 
 const Actions: React.FunctionComponent<IActionsProps> = ({ id }: IActionsProps) => {
-  const { isOpen, onOpen } = useOpenAccount();
+  const [ConfirmDialog, confirm] = useConfirm(
+    "Are you sure?",
+    "You are about to delete this account. This action cannot be undone."
+  );
+  const deleteMutation = useDeleteAccount(id);
+  const { onOpen } = useOpenAccount();
+
+  const handleDelete = async () => {
+    const ok = await confirm();
+    if (ok) {
+      deleteMutation.mutate();
+    }
+  }
+
+
   return (
     <>
+      <ConfirmDialog />
       <DropdownMenu>
         <DropdownMenuTrigger>
             <MoreHorizontalIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem
-            disabled={false}
+            disabled={deleteMutation.isPending}
             onClick={() => onOpen(id)}
           > 
             <EditIcon className="size-4 mr-2"/> Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            disabled={deleteMutation.isPending}
+            onClick={handleDelete}
+          > 
+            <Trash className="size-4 mr-2"/> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

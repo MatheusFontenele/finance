@@ -32,7 +32,7 @@ export const useConfirm = (
           <DialogTitle>{ title }</DialogTitle>
           <DialogDescription>{ message }</DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="gap-y-2">
           <Button variant="outline" onClick={handleCancel}>Cancel</Button>
           <Button onClick={handleConfirm}>Confirm</Button>
         </DialogFooter>

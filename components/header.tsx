@@ -19,9 +19,11 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
             <Navigation />
           </div>
           <ClerkLoaded>
-            <UserButton
-              afterSignOutUrl="/"
-            />
+            <div className="flex justify-center items-center p-1 rounded-full border border-blue-400">
+              <UserButton
+                afterSignOutUrl="/"
+              />
+            </div>
           </ClerkLoaded>
           <ClerkLoading>
             <Loader2 className="animate-spin text-muted-foreground" size="32" color='#FFF' />
