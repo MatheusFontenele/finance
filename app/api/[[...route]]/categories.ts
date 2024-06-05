@@ -58,7 +58,7 @@ const app = new Hono()
         )
 
         if (!data) {
-          return context.json({ error: "Account not found" }, 404);
+          return context.json({ error: "Category not found" }, 404);
         }
 
       return context.json({ data });
@@ -141,7 +141,7 @@ const app = new Hono()
         .returning();
 
       if (!data) {
-        return context.json({ error: "Account not found" }, 404);
+        return context.json({ error: "Category not found" }, 404);
       }
 
       return context.json({ data });
@@ -175,7 +175,7 @@ const app = new Hono()
         });
 
       if (!data) {
-        return context.json({ error: "Account not found" }, 404);
+        return context.json({ error: "Category not found" }, 404);
       }
 
       return context.json({ data });
