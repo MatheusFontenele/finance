@@ -1,4 +1,4 @@
-import { pgTable, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 
 
@@ -19,3 +19,13 @@ export const categories = pgTable("categories", {
 });
 
 export const insertCategorySchema = createInsertSchema(categories)
+
+export const transactions = pgTable("transactions", {
+  id: text('id').primaryKey(),
+  amount: integer('amount').notNull(),
+  payee: text('payee').notNull(),
+  note: text('note'),
+  date: timestamp('date', {mode: "date"}).notNull(),
+  accountId: text('account_id').references(() =>accounts.id, {onDelete: "cascade"}).notNull(),
+  categoryId: text('category_id').references(() =>categories.id, {onDelete: "set null"}),
+});
