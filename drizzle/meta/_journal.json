@@ -36,6 +36,13 @@
       "when": 1717369645770,
       "tag": "0004_rare_hiroim",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1718419856118,
+      "tag": "0005_first_lady_bullseye",
+      "breakpoints": true
     }
   ]
 }
