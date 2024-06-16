@@ -121,6 +121,30 @@ const app = new Hono()
     }
   )
   .post(
+    "/bulk-create",
+    clerkMiddleware(),
+    zValidator("json", z.array(insertTransactionSchema.omit({ id: true }))),
+    async (context) => {
+      const auth = getAuth(context);
+      const values = context.req.valid("json");
+
+      if (!auth?.userId) {
+        return context.json({ error: "Unauthorized" }, 401);
+      }
+      const data = await db
+        .insert(transactions)
+        .values(
+          values.map((value) => ({
+            id: createId(),
+            ...value,
+          }))
+        )
+        .returning();
+      
+      return context.json({ data });
+    }
+  )
+  .post(
     "/bulk-delete",
     clerkMiddleware(),
     zValidator("json", z.object({ ids: z.array(z.string()) })),
@@ -149,7 +173,6 @@ const app = new Hono()
         )
         .returning({ id: transactions.id });
          
-          
       return context.json({ data });
     }
   )
