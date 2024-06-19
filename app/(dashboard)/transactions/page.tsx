@@ -8,9 +8,10 @@ import { columns } from './columns';
 import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useBulkDelete } from '@/features/accounts/api/use-bulk-delete';
+import { useNewTransaction } from '@/features/transactions/hooks/use-new-transaction';
 
 const AccountsPage = () => {
-  const newAccount = useNewAccount();
+  const newTransaction = useNewTransaction();
   const deleteAccounts = useBulkDelete();
   const accountsQuery = useGetAccounts();
   const accounts = accountsQuery.data || [];
@@ -39,9 +40,9 @@ const AccountsPage = () => {
       <Card className='border-none drop-shadow-sm'>
         <CardHeader className='gap-y-2 lg:flex-row lg:items-center lg:justify-between'>
           <CardTitle className='text-xl line-clamp-1'>
-            Accounts
+            Transactions history
           </CardTitle>
-          <Button size="sm" onClick={newAccount.onOpen}>
+          <Button size="sm" onClick={newTransaction.onOpen}>
             <Plus className='mr-2' size={16} />
             Add new
           </Button>

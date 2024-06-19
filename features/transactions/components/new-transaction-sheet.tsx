@@ -1,5 +1,4 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { AccountForm } from "./transaction-form";
 import { z } from "zod";
 import { insertTransactionSchema } from "@/db/schema";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
@@ -9,7 +8,7 @@ const formSchema = insertTransactionSchema.omit({ id: true });
 
 type FormValues = z.input<typeof formSchema>;
 
-export const NewAccountSheet = () => {
+export const NewTransactionSheet = () => {
   const { isOpen, onClose } = useNewTransaction();
   const mutation = useCreateTransaction();
 

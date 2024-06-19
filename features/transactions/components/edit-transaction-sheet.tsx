@@ -1,31 +1,30 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { AccountForm } from "./transaction-form";
-import { insertAccountSchema } from "@/db/schema";
+import { TransactionForm } from "./transaction-form";
+import { insertTransactionSchema } from "@/db/schema";
 import { z } from "zod";
-import { useOpenAccount } from "../hooks/use-open-transaction";
-import { useGetAccount } from "../api/use-get-transaction";
+import { useGetTransaction } from "../api/use-get-transaction";
 import Loader from "@/components/loader";
-import { useEditAccount } from "../api/use-edit-transaction";
-import { useDeleteAccount } from "../api/use-delete-transaction";
 import { useConfirm } from "@/hooks/use-confirm";
+import { useOpenTransaction } from "../hooks/use-open-transaction";
+import { useEditTransaction } from "../api/use-edit-transaction";
+import { useDeleteTransaction } from "../api/use-delete-transaction";
 
-const formSchema = insertAccountSchema.pick({
-  name: true,
-});
+const formSchema = insertTransactionSchema.omit({ id: true });
 
 type FormValues = z.input<typeof formSchema>;
 
-export const EditAccountSheet = () => {
-  const { isOpen, onClose, id } = useOpenAccount();  
-  const accountQuery = useGetAccount(id);
-  const editMutation = useEditAccount(id);
-  const deleteMutation = useDeleteAccount(id);
+export const EditTransactionSheet = () => {
+  const { isOpen, onClose, id } = useOpenTransaction();
+  
+  const transactionQuery = useGetTransaction(id);
+  const editMutation = useEditTransaction(id);
+  const deleteMutation = useDeleteTransaction(id);
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
     "You are about to delete this account. This action cannot be undone.",
   )
 
-  const isLoading = accountQuery.isLoading;
+  const isLoading = transactionQuery.isLoading;
   const isPending = editMutation.isPending || deleteMutation.isPending;
 
   const onSubmit = (values: FormValues) => {
@@ -36,10 +35,20 @@ export const EditAccountSheet = () => {
     });
   }
 
-  const defaultValues = accountQuery.data ? {
-    name: accountQuery.data.name, 
+  const defaultValues = transactionQuery.data ? {
+    amount: transactionQuery.data.amount,
+    date: transactionQuery.data.date,
+    categoryId: transactionQuery.data.categoryId,
+    accountId: transactionQuery.data.accountId,
+    note: transactionQuery.data.note,
+    payee: transactionQuery.data.payee,
   } : {
-    name: '',
+    amount: 0,
+    date: new Date(),
+    categoryId: "",
+    accountId: "",
+    note: "",
+    payee: "",
   }
 
   const onDelete = async () => {
@@ -72,7 +81,7 @@ export const EditAccountSheet = () => {
                 <Loader />
               </div>
             ) : (
-              <AccountForm
+              <TransactionForm
                 id={id}
                 onSubmit={onSubmit} 
                 disabled={isPending}
