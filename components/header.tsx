@@ -5,6 +5,7 @@ import Navigation from './navigation';
 import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
 import { Bell, Loader2, Search, Wallet } from 'lucide-react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 interface IHeaderProps {
 }
@@ -70,7 +71,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
             </div>
           </div>
           <div className="space-y-4 flex flex-col justify-between">
-            <span className='text-[#7E7F82] lg:self-end'>{formattedDate}</span>
+            <p className='text-[#7E7F82] lg:self-end'>{formattedDate}</p>
             <div className="flex flex-col md:flex-row gap-y-2 gap-x-4">
               <div className="bg-white/10 rounded-md p-4 h-36 w-full lg:max-w-36 flex flex-col justify-between">
                 <div className="flex items-center gap-x-2">
@@ -134,6 +135,8 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
       </div>
     </header>
   );
-};
+}; 
 
-export default Header;
+export default dynamic(() => Promise.resolve(Header), {
+  ssr: false
+});
