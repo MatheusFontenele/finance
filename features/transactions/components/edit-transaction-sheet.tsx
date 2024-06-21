@@ -1,13 +1,13 @@
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { TransactionForm } from "./transaction-form";
-import { insertTransactionSchema } from "@/db/schema";
 import { z } from "zod";
-import { useGetTransaction } from "../api/use-get-transaction";
 import Loader from "@/components/loader";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { insertTransactionSchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useOpenTransaction } from "../hooks/use-open-transaction";
-import { useEditTransaction } from "../api/use-edit-transaction";
+import { TransactionForm } from "./transaction-form";
 import { useDeleteTransaction } from "../api/use-delete-transaction";
+import { useEditTransaction } from "../api/use-edit-transaction";
+import { useGetTransaction } from "../api/use-get-transaction";
+import { useOpenTransaction } from "../hooks/use-open-transaction";
 
 const formSchema = insertTransactionSchema.omit({ id: true });
 
@@ -76,19 +76,19 @@ export const EditTransactionSheet = () => {
 
           {
             isLoading ? 
-            (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Loader />
-              </div>
-            ) : (
-              <TransactionForm
-                id={id}
-                onSubmit={onSubmit} 
-                disabled={isPending}
-                defaultValues={defaultValues}
-                onDelete={onDelete}
-              />
-            )
+              (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader />
+                </div>
+              ) : (
+                <TransactionForm
+                  id={id}
+                  onSubmit={onSubmit} 
+                  disabled={isPending}
+                  defaultValues={defaultValues}
+                  onDelete={onDelete}
+                />
+              )
           }
         </SheetContent>
       </Sheet>

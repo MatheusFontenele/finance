@@ -13,6 +13,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
+import { TrashIcon } from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -21,11 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 
-import React from "react"
-import { TrashIcon } from "lucide-react"
 import { useConfirm } from "@/hooks/use-confirm"
 
 interface DataTableProps<TData, TValue> {
@@ -115,9 +115,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}

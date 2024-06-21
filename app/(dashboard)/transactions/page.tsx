@@ -1,14 +1,13 @@
 "use client";
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useNewAccount } from '@/features/accounts/hooks/use-new-account';
 import { Loader2, Plus } from 'lucide-react';
 import { DataTable } from '@/components/data-table';
-import { columns } from './columns';
-import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useBulkDelete } from '@/features/accounts/api/use-bulk-delete';
+import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
 import { useNewTransaction } from '@/features/transactions/hooks/use-new-transaction';
+import { columns } from './columns';
 
 const AccountsPage = () => {
   const newTransaction = useNewTransaction();

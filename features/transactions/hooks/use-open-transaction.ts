@@ -5,10 +5,10 @@ type OpenTransactionState = {
   isOpen: boolean;
   onOpen: (id: string) => void;
   onClose: () => void;
-}
-export const useOpenTransaction = create<OpenTransactionState>((set) => ({  
+};
+export const useOpenTransaction = create<OpenTransactionState>((set) => ({
   id: undefined,
   isOpen: false,
-  onOpen: (id: string) => set({ isOpen: true, id: id}),
-  onClose: () => set({ isOpen: false, id: undefined}),
-}))
+  onOpen: (id: string) => set({ isOpen: true, id: id }),
+  onClose: () => set({ isOpen: false, id: undefined }),
+}));

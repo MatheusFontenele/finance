@@ -1,14 +1,14 @@
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { AccountForm } from "./account-form";
-import { insertAccountSchema } from "@/db/schema";
 import { z } from "zod";
-import { useOpenAccount } from "../hooks/use-open-account";
-import { useGetAccount } from "../api/use-get-account";
 import Loader from "@/components/loader";
-import { useEditAccount } from "../api/use-edit-account";
-import { useDeleteAccount } from "../api/use-delete-account";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { insertAccountSchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
+import { AccountForm } from "./account-form";
+import { useDeleteAccount } from "../api/use-delete-account";
+import { useEditAccount } from "../api/use-edit-account";
+import { useGetAccount } from "../api/use-get-account";
+import { useOpenAccount } from "../hooks/use-open-account";
 
 const formSchema = insertAccountSchema.pick({
   name: true,
@@ -68,19 +68,19 @@ export const EditAccountSheet = () => {
 
           {
             isLoading ? 
-            (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Loader />
-              </div>
-            ) : (
-              <AccountForm
-                id={id}
-                onSubmit={onSubmit} 
-                disabled={isPending}
-                defaultValues={defaultValues}
-                onDelete={onDelete}
-              />
-            )
+              (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader />
+                </div>
+              ) : (
+                <AccountForm
+                  id={id}
+                  onSubmit={onSubmit} 
+                  disabled={isPending}
+                  defaultValues={defaultValues}
+                  onDelete={onDelete}
+                />
+              )
           }
         </SheetContent>
       </Sheet>

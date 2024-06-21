@@ -1,18 +1,17 @@
 "use client";
+import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
+import { Bell, Loader2, Search, Wallet } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import * as React from 'react';
 import HeaderLogo from './header-logo';
 import Navigation from './navigation';
-import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
-import { Bell, Loader2, Search, Wallet } from 'lucide-react';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
 interface IHeaderProps {
 }
 
 const Header: React.FunctionComponent<IHeaderProps> = (props) => {
   const {isLoaded, user} = useUser();
-  //get formated date Apr01,2022 - Apr30,22
   const date = new Date();
   const month = date.toLocaleString('default', { month: 'long' });
   const year = date.getFullYear();
@@ -38,9 +37,9 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
               <Bell className="text-muted-foreground" size="24" color='#FFF' />
             </div>
             <ClerkLoaded>
-                <UserButton
-                  afterSignOutUrl="/"
-                />
+              <UserButton
+                afterSignOutUrl="/"
+              />
             </ClerkLoaded>
             <ClerkLoading>
               <Loader2 className="animate-spin text-muted-foreground" size="32" color='#FFF' />

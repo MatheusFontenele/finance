@@ -1,9 +1,9 @@
 "use client";
+import { EditIcon, MoreHorizontalIcon, Trash } from "lucide-react";
 import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 import { useConfirm } from "@/hooks/use-confirm";
-import { EditIcon, MoreHorizontalIcon, Trash } from "lucide-react";
 
 interface IActionsProps {
   id: string;
@@ -30,7 +30,7 @@ const Actions: React.FunctionComponent<IActionsProps> = ({ id }: IActionsProps) 
       <ConfirmDialog />
       <DropdownMenu>
         <DropdownMenuTrigger>
-            <MoreHorizontalIcon className="size-4" />
+          <MoreHorizontalIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem

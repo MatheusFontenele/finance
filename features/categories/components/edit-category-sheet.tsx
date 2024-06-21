@@ -1,14 +1,14 @@
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { CategoryForm } from "./category-form";
-import { insertCategorySchema } from "@/db/schema";
 import { z } from "zod";
-import { useOpenCategory } from "../hooks/use-open-category";
 import Loader from "@/components/loader";
-import { useEditCategory } from "../api/use-edit-category";
-import { useDeleteCategory } from "../api/use-delete-category";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { insertCategorySchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
+import { CategoryForm } from "./category-form";
+import { useDeleteCategory } from "../api/use-delete-category";
+import { useEditCategory } from "../api/use-edit-category";
 import { useGetCategory } from "../api/use-get-category";
+import { useOpenCategory } from "../hooks/use-open-category";
 
 const formSchema = insertCategorySchema.pick({
   name: true,
@@ -68,19 +68,19 @@ export const EditCategorySheet = () => {
 
           {
             isLoading ? 
-            (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Loader />
-              </div>
-            ) : (
-              <CategoryForm
-                id={id}
-                onSubmit={onSubmit} 
-                disabled={isPending}
-                defaultValues={defaultValues}
-                onDelete={onDelete}
-              />
-            )
+              (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader />
+                </div>
+              ) : (
+                <CategoryForm
+                  id={id}
+                  onSubmit={onSubmit} 
+                  disabled={isPending}
+                  defaultValues={defaultValues}
+                  onDelete={onDelete}
+                />
+              )
           }
         </SheetContent>
       </Sheet>
