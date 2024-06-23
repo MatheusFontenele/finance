@@ -1,7 +1,7 @@
 "use client";
+
 import { ClerkLoaded, ClerkLoading, UserButton, useUser } from '@clerk/nextjs';
 import { Bell, Loader2, Search, Wallet } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import * as React from 'react';
 import HeaderLogo from './header-logo';
@@ -12,14 +12,6 @@ interface IHeaderProps {
 
 const Header: React.FunctionComponent<IHeaderProps> = (props) => {
   const {isLoaded, user} = useUser();
-  const date = new Date();
-  const month = date.toLocaleString('default', { month: 'long' });
-  const year = date.getFullYear();
-  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-  const firstDayFormatted = firstDay.toLocaleString('default', { day: '2-digit' });
-  const lastDayFormatted = lastDay.toLocaleString('default', { day: '2-digit' });
-  const formattedDate = `${month} ${firstDayFormatted},${year} - ${month} ${lastDayFormatted},${year}`;
 
   return (
     <header className='bg-[#212226] px-4 py-8 lg:px-14 rounded-b-lg'>
@@ -70,7 +62,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
             </div>
           </div>
           <div className="space-y-4 flex flex-col justify-between">
-            <p className='text-[#7E7F82] lg:self-end'>{formattedDate}</p>
+            <p className='text-[#7E7F82] lg:self-end'>data</p>
             <div className="flex flex-col md:flex-row gap-y-2 gap-x-4">
               <div className="bg-white/10 rounded-md p-4 h-36 w-full lg:max-w-36 flex flex-col justify-between">
                 <div className="flex items-center gap-x-2">
@@ -136,6 +128,4 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
   );
 }; 
 
-export default dynamic(() => Promise.resolve(Header), {
-  ssr: false
-});
+export default Header;

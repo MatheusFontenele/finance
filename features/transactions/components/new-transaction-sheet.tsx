@@ -1,4 +1,5 @@
 import { z } from "zod";
+import Loader from "@/components/loader";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { insertTransactionSchema } from "@/db/schema";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
@@ -29,6 +30,9 @@ export const NewTransactionSheet = () => {
   const onCreateAccount = (name: string) => accountMutation.mutate({ name });
   const accountOptions = (accountQuery.data ?? []).map(account => ({ label: account.name, value: account.id }));
 
+  const isPending = mutation.isPending || categoryMutation.isPending || accountMutation.isPending;
+  const isLoading = categoryQuery.isLoading || accountQuery.isLoading;
+
   const onSubmit = (values: FormValues) => {
     mutation.mutate(values, {
       onSuccess: () => {
@@ -46,13 +50,17 @@ export const NewTransactionSheet = () => {
             Add a new transaction
           </SheetDescription>
         </SheetHeader>
-        <TransactionForm 
-          onSubmit={onSubmit}
-          onCreateCategory={onCreateCategory}
-          onCreateAccount={onCreateAccount}
-          categoryOptions={categoryOptions}
-          accountOptions={accountOptions}
-        />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <TransactionForm 
+            onSubmit={onSubmit}
+            onCreateCategory={onCreateCategory}
+            onCreateAccount={onCreateAccount}
+            categoryOptions={categoryOptions}
+            accountOptions={accountOptions}
+          />
+        )}
       </SheetContent>
     </Sheet>
   );
