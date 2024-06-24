@@ -7,7 +7,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { insertTransactionSchema } from "@/db/schema";
 
-const formSchema = insertTransactionSchema.omit({ id: true });
+const formSchema = z.object({
+  date: z.coerce.date(),
+  accountId: z.string().nonempty(),
+});
 
 type FromValues = z.input<typeof formSchema>;
 
