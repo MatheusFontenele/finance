@@ -10,6 +10,10 @@ import { insertTransactionSchema } from "@/db/schema";
 const formSchema = z.object({
   date: z.coerce.date(),
   accountId: z.string().nonempty(),
+  categoryId: z.string().nullable().optional(),
+  amount: z.string(),
+  peyee: z.string(),
+  note: z.string().nullable().optional()
 });
 
 type FromValues = z.input<typeof formSchema>;
