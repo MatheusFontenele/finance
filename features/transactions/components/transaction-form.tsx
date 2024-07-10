@@ -16,12 +16,15 @@ const formSchema = z.object({
   note: z.string().nullable().optional()
 });
 
+const apiSchema = insertTransactionSchema.omit({ id: true }); 
+
 type FromValues = z.input<typeof formSchema>;
+type ApiFormValues = z.output<typeof apiSchema>;
 
 type props = {
   id?: string;
   defaultValues?: FromValues;
-  onSubmit: (values: FromValues) => void;
+  onSubmit: (values: ApiFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
 }

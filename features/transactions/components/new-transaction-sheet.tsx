@@ -55,9 +55,9 @@ export const NewTransactionSheet = () => {
         ) : (
           <TransactionForm 
             onSubmit={onSubmit}
+            categoryOptions={categoryOptions}
             onCreateCategory={onCreateCategory}
             onCreateAccount={onCreateAccount}
-            categoryOptions={categoryOptions}
             accountOptions={accountOptions}
           />
         )}
