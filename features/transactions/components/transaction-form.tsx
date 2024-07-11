@@ -27,6 +27,10 @@ type props = {
   onSubmit: (values: ApiFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  accountOptions: { label: string; value: string }[];
+  categoryOptions: { label: string; value: string }[];
+  onCreateAccount: (name: string) => void;
+  onCreateCategory: (name: string) => void;
 }
 
 export const TransactionForm = ({
@@ -35,6 +39,10 @@ export const TransactionForm = ({
   onSubmit,
   onDelete,
   disabled,
+  accountOptions,
+  categoryOptions,
+  onCreateAccount,
+  onCreateCategory 
 }: props) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
