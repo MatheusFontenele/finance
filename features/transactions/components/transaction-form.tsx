@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -63,23 +64,49 @@ export const TransactionForm = ({
         className="space-y-4 pt-4"
       > 
         <FormField 
-          name="amount"
+          name="accountId"
           control={form.control}
           render={(({field}) => (
             <FormItem>
               <FormLabel>
-                Name
+                Account
               </FormLabel>
               <FormControl>
-                <Input 
+                <Select 
+                  placeholder="Select an account"
+                  options={accountOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onCreate={onCreateAccount}
                   disabled={disabled}
-                  placeholder="e.g. cash banck credti card"
-                  {...field}
                 />
               </FormControl>
             </FormItem>
           ))}
         />
+
+        <FormField 
+          name="categoryId"
+          control={form.control}
+          render={(({field}) => (
+            <FormItem>
+              <FormLabel>
+                Category
+              </FormLabel>
+              <FormControl>
+                <Select 
+                  placeholder="Select an category"
+                  options={categoryOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onCreate={onCreateCategory}
+                  disabled={disabled}
+                />
+              </FormControl>
+            </FormItem>
+          ))}
+        />
+
         <div className=" space-y-2">
           <Button
             type="submit"
