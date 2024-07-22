@@ -1,7 +1,9 @@
+import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
+import { CalendarIcon } from "lucide-react";
 import { SelectSingleEventHandler } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { Popover, PopoverTrigger } from "./ui/popover";
+import { Calendar } from "./ui/calendar";
 
 type Props = {
   value?: Date;
@@ -9,7 +11,7 @@ type Props = {
   disabled?: boolean;
 }
 
-const DatePicker = ({ value, onChange, disabled }: Props) => {
+export const DatePicker = ({ value, onChange, disabled }: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -23,9 +25,28 @@ const DatePicker = ({ value, onChange, disabled }: Props) => {
             )
           }
         >
-           
+          <CalendarIcon className="size-4 mr-2" /> 
+          {value ? value.toDateString() : "Select a date"}
         </Button>
       </PopoverTrigger>
+      <PopoverContent
+        className="w-auto z-[999] bg-white border border-gray-200 shadow-lg rounded-lg"
+        align="center"
+        avoidCollisions={false}
+        style={{
+          maxHeight: "var(--radix-popover-content-available-height)",
+          overflowY: "auto",
+        }}
+
+      >
+        <Calendar
+          mode="single"
+          selected={value}
+          onSelect={onChange}
+          disabled={disabled}
+          initialFocus
+        />
+      </PopoverContent>
     </Popover>
   )
 }
